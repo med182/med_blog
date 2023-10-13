@@ -21,12 +21,12 @@ const post= await Posts.findByPk(id);
 res.json(post)
 
 })
-// router.get('/byuserId/:id',async(req,res)=>{
-// const id = req.params.id;
-// const listOfPosts= await Posts.findAll({where: {}});
-// res.json(listOfPosts)
+router.get('/byuserId/:id',async(req,res)=>{
+const id = req.params.id;
+const listOfPosts= await Posts.findAll({where: {UserId: id}});
+res.json(listOfPosts)
 
-// })
+})
 
 router.post('/', validateToken,async(req,res)=>{
     const post = req.body
