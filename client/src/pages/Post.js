@@ -10,7 +10,7 @@ function Post() {
   const [newComment, setNewComment] = useState("");
   const { authState } = useContext(AuthContext);
 
-  let navigate=useNavigate();
+  let navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:8000/posts/byId/${id}`).then((response) => {
@@ -39,16 +39,14 @@ function Post() {
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
-        }else{
+        } else {
           const commentToAdd = {
-       
             commentBody: newComment,
             username: response.data.username,
           };
           setComments([...comments, commentToAdd]);
           setNewComment("");
         }
-
       });
   };
 
@@ -63,31 +61,83 @@ function Post() {
           comments.filter((val) => {
             return val.id !== commentId;
           })
-       
         );
       });
   };
 
-  const deletePost = (id) =>{
-    axios.delete(`http://localhost:8000/posts/${id}`,{
-      headers: { accessToken: localStorage.getItem("accessToken")}
-    }).then(()=>{
-      navigate(
-        '/');
-    })
-  }
+  const deletePost = (id) => {
+    axios
+      .delete(`http://localhost:8000/posts/${id}`, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
+      .then(() => {
+        navigate("/");
+      });
+  };
 
+  const editPost = (option) => {
+    if (option === "title") {
+      let newTitle = prompt("Enter New Title: ");
+      axios.put(
+        "http://localhost:8000/posts/title",
+        {
+          newTitle: newTitle,
+          id: id,
+        },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      );
+
+      setPostObject({ ...postObject, title: newTitle });
+    } else {
+      let newPostText = prompt("Enter New Text: ");
+      axios.put(
+        "http://localhost:8000/posts/postText",
+        {
+          newText: newPostText,
+          id: id,
+        },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      );
+      setPostObject({ ...postObject, postText: newPostText });
+    }
+  };
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
-          <div className="title">{postObject.title}</div>
-          <div className="body">{postObject.postText}</div>
+          <div
+            className="title"
+            onClick={() => {
+              if (authState.username === postObject.username) {
+                editPost("title");
+              }
+            }}
+          >
+            {postObject.title}
+          </div>
+          <div
+            className="body"
+            onClick={() => {
+              editPost("body");
+            }}
+          >
+            {postObject.postText}
+          </div>
           <div className="footer">
-          {postObject.username}
-          {authState.username === postObject.username &&(
-             <button onClick={()=>{deletePost(postObject.id)}}>Supprimer Le Post</button>
-             )}
+            {postObject.username}
+            {authState.username === postObject.username && (
+              <button
+                onClick={() => {
+                  deletePost(postObject.id);
+                }}
+              >
+                Supprimer Le Post
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -121,7 +171,6 @@ function Post() {
                 )}
               </div>
             );
-
           })}
         </div>
       </div>

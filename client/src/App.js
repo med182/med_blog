@@ -10,6 +10,7 @@ import Registration from "./pages/Registration";
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ChangePassword from "./pages/ChangePassword";
 
 const App = () => {
   const [authState, setAuthState] = useState({
@@ -60,9 +61,10 @@ const App = () => {
               )}
             </div>
             <div className="loggedInContainer">
-            <h1>{authState.username}</h1>
-            {authState.status &&  <button onClick={logout}>Se Déconnecter</button> } 
-           
+              <h1>{authState.username}</h1>
+              {authState.status && (
+                <button onClick={logout}>Se Déconnecter</button>
+              )}
             </div>
           </div>
 
@@ -73,6 +75,7 @@ const App = () => {
             <Route path="/registration" element={<Registration />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/changepassword" element={<ChangePassword />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
