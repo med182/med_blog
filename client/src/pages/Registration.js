@@ -9,8 +9,10 @@ import axios from "axios";
 function Registration() {
   let navigate = useNavigate();
   const initialValues = {
+    email: "",
     username: "",
     password: "",
+    repeatedPassword: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -23,6 +25,18 @@ function Registration() {
         /^(?=.*\d)(?=.*[A-Z])(?=.*\W).+$/,
         "Le mot de passe doit contenir au moins un chiffre, une majuscule et un caractère spécial."
       ),
+
+    repeatedPassword: Yup.string()
+      .oneOf(
+        [Yup.ref("password"), null],
+        "Les mots de passe ne correspondent pas. "
+      )
+      .required("Ce champ est requis."),
+
+    email: Yup.string()
+      .email("Adresse e-mail invalide.")
+      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Adresse e-mail invalide.")
+      .required("Ce champs est requis."),
   });
 
   const onSubmit = (data) => {
@@ -32,10 +46,19 @@ function Registration() {
         console.log(data);
       })
       .catch((error) => {
-        console.error(
-          "Une erreur s'est produite lors de l'inscription :",
-          error
-        );
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          // Affiche le message d'erreur renvoyé par le serveur
+          alert(error.response.data.error);
+        } else {
+          console.error(
+            "Une erreur s'est produite lors de l'inscription :",
+            error
+          );
+        }
       });
     navigate("/login");
   };
@@ -49,6 +72,15 @@ function Registration() {
         validationSchema={validationSchema}
       >
         <Form className="formContainer">
+          <label>Email :</label>
+          <ErrorMessage name="email" component="span" className="error" />
+          <Field
+            autoComplete="off"
+            type="email"
+            id="inputCreatePost"
+            name="email"
+            placeholder="(Votre adresse e-mail ...)"
+          />
           <label>Pseudo :</label>
           <ErrorMessage name="username" component="span" className="error" />
           <Field
@@ -64,6 +96,19 @@ function Registration() {
             id="inputCreatePost"
             name="password"
             placeholder="(Votre mot de Passe ...)"
+          />
+          <label>Confirmer le Mot de Passe :</label>
+          <ErrorMessage
+            name="repeatedPassword"
+            component="span"
+            className="error"
+          />
+          <Field
+            autoComplete="off"
+            type="password"
+            id="inputCreatePost"
+            name="repeatedPassword"
+            placeholder="(Répétez le mot de Passe ...)"
           />
 
           <button type="Submit">S'inscrire</button>

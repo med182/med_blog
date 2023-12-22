@@ -43,7 +43,7 @@ function Profile() {
               <div
                 className="body"
                 onClick={() => {
-                  Navigate(`/post/${value.id}`);
+                  navigate(`/post/${value.id}`);
                 }}
               >
                 {value.postText}

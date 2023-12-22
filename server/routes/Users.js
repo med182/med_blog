@@ -6,11 +6,29 @@ const { validateToken } = require("../middlewares/AuthMiddlwares");
 const { sign } = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, repeatedPassword, email } = req.body;
+
+  if (password !== repeatedPassword) {
+    return res
+      .status(400)
+      .json({ error: "les mots de passe ne correspondent pas" });
+  }
+
+  const exitingUser = await Users.findOne({
+    where: { username: username, email: email },
+  });
+  if (exitingUser) {
+    return res
+      .status(400)
+      .json({
+        error: "Cet identifiant ou cette adresse e-mail n'est pas diponible!",
+      });
+  }
   bcrypt.hash(password, 10).then((hash) => {
     Users.create({
       username: username,
       password: hash,
+      email: email,
     });
     res.json("SUCCESS");
   });
