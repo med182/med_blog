@@ -4,6 +4,42 @@ const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddlwares");
 const { sign } = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
+
+const nodemailer = require("nodemailer");
+
+const transport = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "404b2c10747e03",
+    pass: "4d29eeb9dee790",
+  },
+});
+
+router.get("/confirm/:token", async (req, res) => {
+  const token = req.params.token;
+  console.log("Token:", token);
+
+  try {
+    const decoded = verify(token, "votre-secret-de-confirmation");
+
+    const user = await Users.findOne({ where: { email: decoded.email } });
+
+    if (user) {
+      await Users.update(
+        { isConfirmed: true },
+        { where: { email: decoded.email } }
+      );
+      res.redirect("http://localhost:3000/login");
+    } else {
+      res.status(400).json({ error: "Utilisateur non trouvé" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la confirmation" });
+  }
+});
 
 router.post("/", async (req, res) => {
   const { username, password, repeatedPassword, email } = req.body;
@@ -18,19 +54,40 @@ router.post("/", async (req, res) => {
     where: { username: username, email: email },
   });
   if (exitingUser) {
-    return res
-      .status(400)
-      .json({
-        error: "Cet identifiant ou cette adresse e-mail n'est pas diponible!",
-      });
+    return res.status(400).json({
+      error: "Cet identifiant ou cette adresse e-mail n'est pas diponible!",
+    });
   }
+
+  const confirmationToken = sign({ email }, "votre-secret-de-confirmation", {
+    expiresIn: "1d",
+  });
+
   bcrypt.hash(password, 10).then((hash) => {
     Users.create({
       username: username,
       password: hash,
       email: email,
+      confirmationToken: confirmationToken,
     });
-    res.json("SUCCESS");
+
+    const mailOptions = {
+      from: "medblog@gmail.com",
+      to: email,
+      subject: "Confirmation dinscription",
+      html: `Cliquez sur le lien suivant pour confirmer votre inscription :<a href="http://localhost:8000/auth/confirm/${confirmationToken}">Confirmer l'inscription</a>`,
+    };
+
+    transport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur lors de l'envoi de l'e-mail." });
+      } else {
+        console.log("E-mail de confirmation envoyé : " + info.response);
+
+        res.json("SUCCESS");
+      }
+    });
   });
 });
 

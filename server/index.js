@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const nodemailer = require("nodemailer");
+// const path = require("path");
 
 app.use(express.json());
 app.use(cors());
@@ -20,13 +20,8 @@ app.use("/auth", userRouter);
 const likeRouter = require("./routes/Likes");
 app.use("/likes", likeRouter);
 
-const transporter = nodemailer.createTransport({
-  service: "Mailtrap",
-  auth: {
-    user: "404b2c10747e03",
-    pass: "4d29eeb9dee790",
-  },
-});
+// app.set("view engine", "ejs");
+// app.set("views", path.join(__dirname, "pages"));
 
 db.sequelize.sync().then(() => {
   app.listen(8000, () => {

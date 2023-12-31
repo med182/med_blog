@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true,
       },
-      confirmationToken: {
-        type: DataTypes.STRING,
-      },
-      isConfirmed: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
+    },
+    confirmationToken: {
+      type: DataTypes.STRING,
+    },
+    isConfirmed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   });
 

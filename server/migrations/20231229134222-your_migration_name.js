@@ -2,18 +2,17 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.addColumn("Users", "confirmationToken", {
       type: Sequelize.STRING,
     });
-
     await queryInterface.addColumn("Users", "isConfirmed", {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.removeColumn("Users", "confirmationToken");
     await queryInterface.removeColumn("Users", "isConfirmed");
   },
