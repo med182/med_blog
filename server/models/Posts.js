@@ -1,36 +1,28 @@
-module.exports =(sequelize, DataTypes)=>{
-
-   const Posts = sequelize.define("Posts",{
-
-    title :{
-        type: DataTypes.STRING,
-        allowNull:false,
+module.exports = (sequelize, DataTypes) => {
+  const Posts = sequelize.define("Posts", {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-   postText  :{
-        type: DataTypes.STRING,
-        allowNull:false,
+    postText: {
+      type: DataTypes.TEXT, // Utilisation de DataTypes.TEXT pour permettre des textes de longueur variable
+      allowNull: false,
     },
-   username :{
-        type: DataTypes.STRING,
-        allowNull:false,
-    }
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
 
-   });
-
-   Posts.associate = (models) => {
+  Posts.associate = (models) => {
     Posts.hasMany(models.Comments, {
-        onDelete: "cascade",
-    })
+      onDelete: "cascade",
+    });
 
     Posts.hasMany(models.Likes, {
-        onDelete: "cascade",
-    })
-   }
+      onDelete: "cascade",
+    });
+  };
 
-  
-   
- 
-
-   return Posts;
-
-}
+  return Posts;
+};

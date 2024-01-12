@@ -22,6 +22,10 @@ router.get("/confirm/:token", async (req, res) => {
   console.log("Token:", token);
 
   try {
+    const redirectUrl = req.user
+      ? "http://localhost:3000/home"
+      : "http://localhost:3000/login";
+
     const decoded = verify(token, "votre-secret-de-confirmation");
 
     const user = await Users.findOne({ where: { email: decoded.email } });
@@ -31,7 +35,8 @@ router.get("/confirm/:token", async (req, res) => {
         { isConfirmed: true },
         { where: { email: decoded.email } }
       );
-      res.redirect("http://localhost:3000/login");
+
+      return res.redirect(redirectUrl);
     } else {
       res.status(400).json({ error: "Utilisateur non trouvé" });
     }
@@ -89,6 +94,16 @@ router.post("/", async (req, res) => {
       }
     });
   });
+});
+
+router.get("/login", (req, res) => {
+  // Si l'utilisateur est déjà connecté, redirigez-le vers la page d'accueil
+  if (req.user) {
+    return res.redirect("http://localhost:3000/home");
+  }
+
+  // Sinon, affichez le formulaire de connexion
+  res.render("login"); // Remplacez "login" par le nom de votre fichier de formulaire de connexion
 });
 
 router.post("/login", async (req, res) => {

@@ -78,6 +78,18 @@ const App = () => {
             <Route path="/changepassword" element={<ChangePassword />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
+
+          <div className="footer">
+            <div className="links">
+              {/* Ajoutez ici les liens de votre footer */}
+              <Link to="/about">À propos</Link>
+              <Link to="/contact">Contact</Link>
+            </div>
+            <div className="loggedInContainer">
+              {/* Ajoutez ici d'autres éléments de votre footer */}
+              <p>Contactez-nous : contact@example.com</p>
+            </div>
+          </div>
         </Router>
       </AuthContext.Provider>
     </div>

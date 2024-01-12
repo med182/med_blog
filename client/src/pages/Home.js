@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { AuthContext } from "../helpers/AuthContext";
+import { Pagination } from "@mui/material";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(4);
   const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
     if (!localStorage.getItem("accessToken")) {
-      navigate("/login");
+      // navigate("/login");
     } else {
       axios
         .get("http://localhost:8000/posts", {
@@ -72,9 +75,15 @@ function Home() {
       });
   };
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = listOfPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <div>
-      {listOfPosts.map((value, key) => {
+    <div className="post-grid">
+      {currentPosts.map((value, key) => {
         return (
           <div key={key} className="post">
             <div className="title"> {value.title}</div>
@@ -104,6 +113,11 @@ function Home() {
           </div>
         );
       })}
+      <Pagination
+        count={Math.ceil(listOfPosts.length / postsPerPage)}
+        page={currentPage}
+        onChange={(event, value) => paginate(value)}
+      />
     </div>
   );
 }
