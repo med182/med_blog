@@ -41,6 +41,7 @@ function Post() {
           alert(response.data.error);
         } else {
           const commentToAdd = {
+            id: response.data.id,
             commentBody: newComment,
             username: response.data.username,
           };
@@ -52,6 +53,10 @@ function Post() {
 
   const deleteComment = (commentId) => {
     console.log("Deleting comment with ID:", commentId);
+    if (!commentId) {
+      console.error("Comment ID is undefined.");
+      return;
+    }
     axios
       .delete(`http://localhost:8000/comments/${commentId}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
@@ -62,6 +67,9 @@ function Post() {
             return val.id !== commentId;
           })
         );
+      })
+      .catch((error) => {
+        console.error("Error deleting comment:", error);
       });
   };
 
@@ -76,12 +84,21 @@ function Post() {
   };
 
   const editPost = (option) => {
+    let newValue;
     if (option === "title") {
-      let newTitle = prompt("Enter New Title: ");
+      newValue = window.prompt("Enter New Title: ");
+    } else {
+      newValue = prompt("Enter New Text: ");
+    }
+
+    if (newValue !== null) {
       axios.put(
-        "http://localhost:8000/posts/title",
+        option === "title"
+          ? "http://localhost:8000/posts/title"
+          : "http://localhost:8000/posts/postText",
         {
-          newTitle: newTitle,
+          newTitle: option === "title" ? newValue : postObject.title,
+          newText: option === "body" ? newValue : postObject.postText,
           id: id,
         },
         {
@@ -89,22 +106,14 @@ function Post() {
         }
       );
 
-      setPostObject({ ...postObject, title: newTitle });
-    } else {
-      let newPostText = prompt("Enter New Text: ");
-      axios.put(
-        "http://localhost:8000/posts/postText",
-        {
-          newText: newPostText,
-          id: id,
-        },
-        {
-          headers: { accessToken: localStorage.getItem("accessToken") },
-        }
-      );
-      setPostObject({ ...postObject, postText: newPostText });
+      setPostObject({
+        ...postObject,
+        title: option === "title" ? newValue : postObject.title,
+        postText: option === "body" ? newValue : postObject.postText,
+      });
     }
   };
+
   return (
     <div className="postPage">
       <div className="leftSide">
@@ -112,9 +121,7 @@ function Post() {
           <div
             className="title"
             onClick={() => {
-              if (authState.username === postObject.username) {
-                editPost("title");
-              }
+              editPost("title");
             }}
           >
             {postObject.title}

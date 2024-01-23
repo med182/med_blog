@@ -11,6 +11,9 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ChangePassword from "./pages/ChangePassword";
+import ApiPage from "./pages/ApiPage";
+import MovieIcon from "@mui/icons-material/Movie";
+import AdminPanel from "./admin/AdminPanel";
 
 const App = () => {
   const [authState, setAuthState] = useState({
@@ -57,6 +60,10 @@ const App = () => {
                 <>
                   <Link to="/">Acceuil</Link>
                   <Link to="/createpost">Ajouter un Post</Link>
+                  <Link to="/api">
+                    <MovieIcon /> Sorties de Films
+                  </Link>
+                  {authState.role === "admin" && <Link to="/admin">Admin</Link>}
                 </>
               )}
             </div>
@@ -77,6 +84,8 @@ const App = () => {
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/changepassword" element={<ChangePassword />} />
             <Route path="*" element={<PageNotFound />} />
+            <Route path="/api" element={<ApiPage />} />
+            <Route path="/admin" element={<AdminPanel />} />
           </Routes>
 
           <div className="footer">

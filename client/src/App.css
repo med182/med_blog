@@ -1,14 +1,48 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap");
 
 .App {
   width: 100%;
-  height: auto;
+  min-height: 100vh; /* Au moins 100% de la hauteur de la fenêtre visible */
   display: flex;
-  align-items: center;
   flex-direction: column;
 }
 
+@media (min-width: 768px) {
+  .postPage {
+    flex-direction: row;
+  }
+
+  .leftSide,
+  .rightSide {
+    width: 50%;
+  }
+}
+
+/* Pour les tablettes */
+@media (max-width: 767px) {
+  .postPage {
+    flex-direction: column;
+  }
+
+  .leftSide,
+  .rightSide {
+    width: 100%;
+  }
+}
+/* Pour les appareils mobiles */
+@media (max-width: 480px) {
+  .post {
+    width: 90%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .post .title {
+    font-size: 20px;
+  }
+}
 body {
   margin: 0;
   padding: 0;
@@ -20,7 +54,8 @@ body {
 }
 
 .post {
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   height: 300px;
   border-radius: 10px;
   display: flex;
@@ -64,7 +99,7 @@ body {
   place-content: center;
   color: white;
   overflow-y: auto; /* Ajouter la barre de défilement verticale au besoin */
-  max-height: 100%; /* Limiter la hauteur pour activer la barre de défilement uniquement si nécessaire */
+  max-height: 80%; /* Limiter la hauteur pour activer la barre de défilement uniquement si nécessaire */
   white-space: pre-wrap;
   font-family: "Montserrat", sans-serif;
   font-size: 11px;
@@ -117,10 +152,13 @@ body {
   align-items: center;
 }
 .formContainer {
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
+  align-items: center;
+  width: 50%;
+  max-width: 500px;
   height: auto;
   padding: 20px;
   border: 5px solid black;
@@ -165,7 +203,7 @@ span {
   background-color: black;
   display: flex;
   align-items: center;
-  font-family: "Cinzel", serif;
+  font-family: "playfair", "sans-serif";
   color: gold;
 }
 .navbar .links {
@@ -214,18 +252,18 @@ span {
 
 .leftSide {
   flex: 50%;
-  height: calc(100vh - 70px);
+  height: calc(50vh - 50px);
   display: grid;
   place-items: center;
 }
 
 .rightSide {
-  flex: 50%;
-  height: calc(100vh - 70px);
+  flex: 1; /* Utilisez flex-grow pour que la partie droite prenne l'espace restant */
   display: grid;
   place-items: center;
   display: flex;
   flex-direction: column;
+  margin-bottom: 70px;
 }
 
 .rightSide .addCommentContainer {
@@ -236,11 +274,11 @@ span {
   margin-top: 25px;
 }
 .listOfComments .comment:hover {
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 10px 0px;
 }
 .listOfComments .comment .username {
   color: gold;
-  font-family: "Cinzel", serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .addCommentContainer input,
@@ -249,16 +287,14 @@ button {
   height: 40px;
   border-radius: 8px;
   border: none;
-}
-
-.addCommentContainer button {
-  background-color: dodgerblue;
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
 }
 
+/* 
 .addCommentContainer input {
-  border: 2px solid dodgerblue;
-}
+  border: 2px solid white;
+} */
 
 .rightSide .listOfComments {
   flex: 80%;
@@ -276,7 +312,9 @@ button {
   border-radius: 10px;
   margin-top: 20px;
   background-color: rgba(0, 0, 0, 0.8);
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: white;
+  color: white;
+  font-family: "Montserrat", sans-serif;
 }
 
 #individual {
@@ -309,21 +347,23 @@ button {
 }
 
 .loginContainer input,
-button {
+.loginContainer button {
   width: 200px;
   height: 50px;
   border-radius: 8px;
   border: none;
   margin: 10px;
-}
-
-.loginContainer button {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond noir transparent */
   color: white;
 }
 
+.loginContainer button {
+  color: gold; /* Couleur du texte pour le bouton */
+  background-color: black;
+}
+
 .loginContainer input {
-  border: 2px solid black;
+  color: white; /* Couleur du texte pour les champs de saisie */
 }
 
 .password-input-container {
@@ -336,7 +376,7 @@ button {
   right: 20px;
   transform: translateY(-50%);
   cursor: pointer;
-  color: black;
+  color: white; /* Couleur du texte pour l'icône du mot de passe */
 }
 
 #inputCreatePost {
@@ -372,8 +412,7 @@ button {
   align-items: center;
   font-family: "Cinzel", serif;
   color: gold;
-  /* position: fixed; */
-  bottom: 0;
+  position: relative;
 }
 
 .footer .links {
@@ -400,4 +439,119 @@ button {
 .footer p {
   margin-right: 20px;
   color: gold;
+}
+
+/* ... (votre CSS existant) ... */
+
+/* NAVBAR */
+.navbar {
+  width: 100%;
+  height: 70px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  font-family: "playfair", "sans-serif";
+  color: gold;
+}
+
+.navbar .links {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Permettre aux éléments de se replier sur une nouvelle ligne si l'espace est insuffisant */
+}
+
+.navbar .loggedInContainer {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbar a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: gold;
+}
+
+.navbar button {
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+  margin-right: 10px;
+  background-color: white;
+  color: black;
+}
+
+.navbar h1 {
+  text-align: right;
+  margin-right: 10px;
+  color: gold;
+  font-weight: lighter;
+}
+
+/* FOOTER */
+.footer {
+  width: 100%;
+  height: 70px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  font-family: "Cinzel", serif;
+  color: gold;
+  /* position: fixed; */
+  bottom: 0;
+}
+
+.footer .links {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Permettre aux éléments de se replier sur une nouvelle ligne si l'espace est insuffisant */
+}
+
+.footer .loggedInContainer {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: gold;
+}
+
+.footer p {
+  margin-right: 20px;
+  color: gold;
+}
+
+/* ... (votre CSS existant) ... */
+
+/* ApiPage.css */
+.api-page {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.api-page h2 {
+  color: gold;
+}
+
+.api-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.api-page li {
+  margin-bottom: 10px;
 }

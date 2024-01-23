@@ -19,12 +19,14 @@ function Login() {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        localStorage.setItem("accessToken", response.data.token);
+        // localStorage.setItem("accessToken", response.data.token);
         setAuthState({
           username: response.data.username,
           id: response.data.id,
           status: true,
+          role: response.data.role,
         });
+        localStorage.setItem("accessToken", response.data.token);
         navigate("/");
       }
     });
@@ -32,17 +34,18 @@ function Login() {
 
   return (
     <div className="loginContainer">
-      <label>Pseudo : </label>
       <input
         type="text"
+        placeholder="Pseudo"
         onChange={(e) => {
           setUsername(e.target.value);
         }}
       />
-      <label>Mot De Passe : </label>
+
       <div className="password-input-container">
         <input
           type={showPassword ? "text" : "password"}
+          placeholder="Mot de passe"
           onChange={(e) => setPassword(e.target.value)}
         />
         <FontAwesomeIcon
