@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: "user", // Définissez le rôle par défaut comme "user"
+    },
   });
 
   Users.associate = (models) => {

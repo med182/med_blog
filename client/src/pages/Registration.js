@@ -73,7 +73,7 @@ function Registration() {
           );
         }
       });
-    // navigate("/login");
+    navigate("/login");
   };
 
   return (

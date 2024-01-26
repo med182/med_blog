@@ -1,5 +1,11 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
@@ -15,11 +21,15 @@ import ApiPage from "./pages/ApiPage";
 import MovieIcon from "@mui/icons-material/Movie";
 import AdminPanel from "./admin/AdminPanel";
 
+import Logo from "./images/logo_cine.png";
+
 const App = () => {
+  const navigate = useNavigate();
   const [authState, setAuthState] = useState({
     username: "",
     id: 0,
     status: false,
+    role: "",
   });
 
   useEffect(() => {
@@ -35,6 +45,7 @@ const App = () => {
             username: response.data.username,
             id: response.data.id,
             status: true,
+            role: "",
           });
         }
       });
@@ -43,63 +54,68 @@ const App = () => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ username: "", id: 0, status: false });
+    navigate("/login"); // Utilisez la fonction navigate ici
   };
 
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
-        <Router>
-          <div className="navbar">
-            <div className="links">
-              {!authState.status ? (
-                <>
-                  <Link to="/login">Se Connecter</Link>
-                  <Link to="/registration">Inscription</Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/">Acceuil</Link>
-                  <Link to="/createpost">Ajouter un Post</Link>
-                  <Link to="/api">
-                    <MovieIcon /> Sorties de Films
-                  </Link>
-                  {authState.role === "admin" && <Link to="/admin">Admin</Link>}
-                </>
-              )}
-            </div>
-            <div className="loggedInContainer">
-              <h1>{authState.username}</h1>
-              {authState.status && (
-                <button onClick={logout}>Se Déconnecter</button>
-              )}
-            </div>
+        <div className="navbar">
+          {/* <div className="logo">
+              <img src={Logo} alt="Logo" style={{ color: "gold" }} />
+            </div> */}
+          <div className="links">
+            {!authState.status ? (
+              <>
+                <Link to="/login">Se Connecter</Link>
+                <Link to="/registration">Inscription</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/">Acceuil</Link>
+                <Link to="/createpost">Ajouter un Post</Link>
+                <Link to="/api">
+                  <MovieIcon /> Sorties de Films
+                </Link>
+                {authState.role === "admin" && <Link to="/admin">Admin</Link>}
+              </>
+            )}
           </div>
-
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/createpost" element={<CreatePost />} />
-            <Route path="/post/:id" element={<Post />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/changepassword" element={<ChangePassword />} />
-            <Route path="*" element={<PageNotFound />} />
-            <Route path="/api" element={<ApiPage />} />
-            <Route path="/admin" element={<AdminPanel />} />
-          </Routes>
-
-          <div className="footer">
-            <div className="links">
-              {/* Ajoutez ici les liens de votre footer */}
-              <Link to="/about">À propos</Link>
-              <Link to="/contact">Contact</Link>
-            </div>
-            <div className="loggedInContainer">
-              {/* Ajoutez ici d'autres éléments de votre footer */}
-              <p>Contactez-nous : contact@example.com</p>
-            </div>
+          <div className="loggedInContainer">
+            <h1>{authState.username}</h1>
+            {authState.status && (
+              <button onClick={logout}>Se Déconnecter</button>
+            )}
           </div>
-        </Router>
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/createpost" element={<CreatePost />} />
+          <Route path="/post/:id" element={<Post />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="/api" element={<ApiPage />} />
+          <Route
+            path="/admin/*" // Assurez-vous que l'étoile (*) est bien présente ici
+            element={<AdminPanel />}
+          />
+        </Routes>
+
+        <div className="footer">
+          <div className="links">
+            {/* Ajoutez ici les liens de votre footer */}
+            <Link to="/about">À propos</Link>
+            <Link to="/contact">Contact</Link>
+          </div>
+          <div className="loggedInContainer">
+            {/* Ajoutez ici d'autres éléments de votre footer */}
+            <p>Contactez-nous : contact@example.com</p>
+          </div>
+        </div>
       </AuthContext.Provider>
     </div>
   );

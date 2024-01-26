@@ -1,6 +1,6 @@
 const { verify } = require("jsonwebtoken");
 
-const validateToken = (req, res, next) => {
+const validateToken = (requiredRole) => (req, res, next) => {
   const accessToken = req.header("accessToken");
 
   if (!accessToken)
@@ -9,11 +9,20 @@ const validateToken = (req, res, next) => {
   try {
     const validToken = verify(accessToken, "importantsecret");
     req.user = validToken;
-    if (validToken) {
-      return next();
+
+    if (!validToken) {
+      return res.json({ error: "Token invalide." });
     }
+
+    // Vérifiez le rôle si spécifié
+    if (requiredRole && validToken.role !== requiredRole) {
+      return res.status(403).json({ error: "Permission refusée." });
+    }
+
+    return next();
   } catch (err) {
     return res.json({ error: err });
   }
 };
+
 module.exports = { validateToken };

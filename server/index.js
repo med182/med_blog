@@ -20,6 +20,10 @@ app.use("/auth", userRouter);
 const likeRouter = require("./routes/Likes");
 app.use("/likes", likeRouter);
 
+// app.get(/^\/(?!api).*/, (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/public/index.html"));
+// });
+
 // app.set("view engine", "ejs");
 // app.set("views", path.join(__dirname, "pages"));
 

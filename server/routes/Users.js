@@ -105,7 +105,6 @@ router.get("/login", (req, res) => {
   // Sinon, affichez le formulaire de connexion
   res.render("login"); // Remplacez "login" par le nom de votre fichier de formulaire de connexion
 });
-
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -121,11 +120,26 @@ router.post("/login", async (req, res) => {
       });
     }
     const accessToken = sign(
-      { username: user.username, id: user.id },
+      { username: user.username, id: user.id, role: user.role },
       "importantsecret"
     );
-    res.json({ token: accessToken, username: username, id: user.id });
+    res.json({
+      token: accessToken,
+      username: username,
+      id: user.id,
+      role: user.role,
+    });
   });
+});
+
+router.post("/assign-admin/:userId", validateToken, async (req, res) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ error: "Permission refusée." });
+  }
+
+  const userId = req.params.userId;
+  await Users.update({ role: "admin" }, { where: { id: userId } });
+  res.json("L'utilisateur a été attribué le rôle d'administrateur.");
 });
 
 router.get("/auth", validateToken, (req, res) => {

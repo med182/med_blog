@@ -19,14 +19,15 @@ function Login() {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        // localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("role", response.data.role);
         setAuthState({
           username: response.data.username,
           id: response.data.id,
           status: true,
           role: response.data.role,
         });
-        localStorage.setItem("accessToken", response.data.token);
+
         navigate("/");
       }
     });
