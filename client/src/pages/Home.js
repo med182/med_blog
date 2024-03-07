@@ -85,7 +85,7 @@ function Home() {
     <div className="post-grid">
       {currentPosts.map((value, key) => {
         return (
-          <div key={key} className="post">
+          <div key={key} className="post-home">
             <div className="title"> {value.title}</div>
             <div
               className="body"
@@ -113,11 +113,13 @@ function Home() {
           </div>
         );
       })}
-      <Pagination
-        count={Math.ceil(listOfPosts.length / postsPerPage)}
-        page={currentPage}
-        onChange={(event, value) => paginate(value)}
-      />
+      <div className="pagination-container">
+        <Pagination
+          count={Math.ceil(listOfPosts.length / postsPerPage)}
+          page={currentPage}
+          onChange={(event, value) => paginate(value)}
+        />
+      </div>
     </div>
   );
 }

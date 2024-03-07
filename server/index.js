@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const validateToken = require("./middlewares/AuthMiddlwares");
 // const path = require("path");
 
 app.use(express.json());
@@ -19,13 +20,6 @@ app.use("/auth", userRouter);
 
 const likeRouter = require("./routes/Likes");
 app.use("/likes", likeRouter);
-
-// app.get(/^\/(?!api).*/, (req, res) => {
-//   res.sendFile(path.join(__dirname, "../client/public/index.html"));
-// });
-
-// app.set("view engine", "ejs");
-// app.set("views", path.join(__dirname, "pages"));
 
 db.sequelize.sync().then(() => {
   app.listen(8000, () => {

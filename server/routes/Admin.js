@@ -3,8 +3,8 @@ const router = express.Router();
 const { Users, Posts, Comments } = require("../models");
 const bcrypt = require("bcrypt");
 const { validateToken } = require("../middlewares/AuthMiddlwares");
-const { sign } = require("jsonwebtoken");
-const { verify } = require("jsonwebtoken");
+// const { sign } = require("jsonwebtoken");
+// const { verify } = require("jsonwebtoken");
 
 router.get("/admin/posts", validateToken, async (req, res) => {
   try {
@@ -40,7 +40,6 @@ router.get("/admin/posts", validateToken, async (req, res) => {
   }
 });
 
-// Endpoint pour supprimer un post
 router.delete("/admin/delete-post/:postId", validateToken, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
@@ -56,7 +55,7 @@ router.delete("/admin/delete-post/:postId", validateToken, async (req, res) => {
     res.status(500).json({ error: "Erreur lors de la suppression du post." });
   }
 });
-// Endpoint pour supprimer un post
+
 router.delete("/admin/delete-post/:postId", validateToken, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
@@ -90,7 +89,6 @@ router.get("/admin/users", validateToken, async (req, res) => {
   }
 });
 
-// Endpoint pour supprimer un utilisateur
 router.delete("/admin/delete-user/:userId", validateToken, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
@@ -130,7 +128,5 @@ router.delete(
     }
   }
 );
-
-// ... Autres endpoints ...
 
 module.exports = router;

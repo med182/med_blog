@@ -19,9 +19,9 @@ import axios from "axios";
 import ChangePassword from "./pages/ChangePassword";
 import ApiPage from "./pages/ApiPage";
 import MovieIcon from "@mui/icons-material/Movie";
-import AdminPanel from "./admin/AdminPanel";
+// import AdminPanel from "./admin/AdminPanel";
 
-import Logo from "./images/logo_cine.png";
+// import Logo from "./images/logo_cine.png";
 
 const App = () => {
   const navigate = useNavigate();
@@ -61,9 +61,7 @@ const App = () => {
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <div className="navbar">
-          {/* <div className="logo">
-              <img src={Logo} alt="Logo" style={{ color: "gold" }} />
-            </div> */}
+          <div className="logo">Cinéblog</div>
           <div className="links">
             {!authState.status ? (
               <>
@@ -101,7 +99,7 @@ const App = () => {
           <Route path="/api" element={<ApiPage />} />
           <Route
             path="/admin/*" // Assurez-vous que l'étoile (*) est bien présente ici
-            element={<AdminPanel />}
+            // element={<AdminPanel />}
           />
         </Routes>
 

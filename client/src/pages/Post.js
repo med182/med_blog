@@ -166,9 +166,10 @@ function Post() {
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
-                <label>Pseudo: {comment.username}</label>
+                <label> : {comment.username}</label>
                 {authState.username === comment.username && (
                   <button
+                    id="buttonDeleteComment"
                     onClick={() => {
                       deleteComment(comment.id);
                     }}

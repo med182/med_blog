@@ -1,71 +1,58 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Pacifico&display=swap");
+
+/* element.style {
+  min-height: 100vh;
+} */
 
 .App {
   width: 100%;
-  min-height: 100vh; /* Au moins 100% de la hauteur de la fenêtre visible */
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
-  .postPage {
-    flex-direction: row;
-  }
-
-  .leftSide,
-  .rightSide {
-    width: 50%;
-  }
+.leftSide,
+.rightSide {
+  width: 50%;
 }
 
-/* Pour les tablettes */
-@media (max-width: 767px) {
-  .postPage {
-    flex-direction: column;
-  }
-
-  .leftSide,
-  .rightSide {
-    width: 100%;
-  }
+.leftSide,
+.rightSide {
+  width: 100%;
 }
-/* Pour les appareils mobiles */
-@media (max-width: 480px) {
-  .post {
-    width: 90%;
-    max-width: 100%;
-    height: auto;
-  }
 
-  .post .title {
-    font-size: 20px;
-  }
+.post .title {
+  font-size: 20px;
 }
+
 body {
+  height: 100vh;
   margin: 0;
   padding: 0;
-  background-image: url("../public/images/demonstration.jpg"); /* Remplacez 'lien_vers_l_image' par le lien de l'image de fond */
-  background-size: cover;
+  background-image: url("../public/images/demonstration.jpg");
+
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   font-family: "Cinzel", serif;
 }
 
 .post {
   width: 90%;
-  max-width: 400px;
-  height: 300px;
+  width: 400px;
+  max-height: 400px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-
   margin-top: 50px;
   border: 1px solid lightgray;
   font-family: "Cinzel", serif;
   background-color: rgba(0, 0, 0, 0.8);
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow: hidden;
+  /* overflow: auto; */
 }
 
 .post:hover {
@@ -73,7 +60,7 @@ body {
   cursor: pointer;
 }
 .post .title {
-  flex: 20%;
+  flex: 10%;
   border-bottom: 1px solid lightgray;
   background-color: black;
   display: grid;
@@ -84,37 +71,60 @@ body {
 
 .post-grid {
   display: grid;
+  flex-direction: column;
+
+  height: 150vh;
   grid-template-columns: repeat(2, 1fr);
-  justify-items: center; /* Centrer horizontalement */
-  align-items: center; /* Centrer verticalement */
-  /* grid-gap: 20px; */
-  /* Espace entre les posts */
+  justify-items: center;
+  align-items: center;
 }
+.pagination-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* .pagination-container .MuiPagination-root {
+  margin-top: 10px;
+} */
 
 .post .body {
   flex: 60%;
-  padding: 10px; /* Espacement sur les côtés */
-  padding-top: 20px; /* Espacement en haut */
+  padding: 10px;
+  padding-top: 20px;
   display: grid;
   place-content: center;
   color: white;
-  overflow-y: auto; /* Ajouter la barre de défilement verticale au besoin */
-  max-height: 80%; /* Limiter la hauteur pour activer la barre de défilement uniquement si nécessaire */
+  max-height: 50%;
   white-space: pre-wrap;
   font-family: "Montserrat", sans-serif;
   font-size: 11px;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  overflow-wrap: break-word;
 }
 
 .post .footer {
-  flex: 20%;
-  border-top: 1px solid lightgray;
   display: flex;
   align-items: center;
-  padding-left: 15px;
+  justify-content: space-between; /* Pour aligner les éléments à chaque extrémité */
+  padding: 0 15px; /* Ajoute un peu d'espace de chaque côté du footer */
   background-color: black;
   color: gold;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  align-items: center;
+  padding-left: 15px;
+  flex: 10%;
+  height: auto;
+  border-top: 1px solid lightgray;
+
+  /* align-items: center; */
+
+  /* border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px; */
+  /* overflow: hidden; */
+}
+.post .footer button {
+  margin-bottom: auto;
+  order: 1;
 }
 
 .footer .username {
@@ -136,17 +146,102 @@ body {
   color: white;
 }
 
+.post-home {
+  width: 90%;
+  max-width: 400px;
+  height: 300px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  border: 1px solid lightgray;
+  font-family: "Cinzel", serif;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.post-home:hover {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
+}
+
+.post-home .title {
+  flex: 20%;
+  border-bottom: 1px solid lightgray;
+  background-color: black;
+  display: grid;
+  place-content: center;
+  color: gold;
+  font-family: "Cinzel", serif;
+}
+
+.post-home .body {
+  flex: 30%;
+  padding: 10px;
+  padding-top: 20px;
+  display: grid;
+  place-content: center;
+  color: white;
+  max-height: 50%;
+  white-space: pre-wrap;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  overflow-wrap: break-word;
+}
+
+.post-home .footer {
+  flex: 20%;
+  height: auto;
+  border-top: 1px solid lightgray;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  background-color: black;
+  color: gold;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+}
+
+.post-home .footer .username {
+  flex: 50%;
+  color: gold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-home .footer .buttons {
+  flex: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: gold;
+  overflow: hidden;
+}
+
+.post-home .likeBttn {
+  color: rgba(250, 250, 250, 0.8);
+}
+
+.post-home .unlikeBttn {
+  color: white;
+}
+
+.post-home .buttons label {
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
 .buttons label {
   margin-right: 20px;
   margin-left: 10px;
 }
 
-/* CREATE POST PAGE CSS */
-
 .createPostPage {
   font-family: Arial, Helvetica, sans-serif;
   width: 100vw;
-  height: 70vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -188,61 +283,13 @@ body {
 
 .formContainer button:hover {
   cursor: pointer;
-  background-color: dodgerblue;
+  background-color: whitesmoke;
 }
 
 span {
   color: red;
 }
 
-/* NAVBAR */
-
-.navbar {
-  width: 100%;
-  height: 70px;
-  background-color: black;
-  display: flex;
-  align-items: center;
-  font-family: "playfair", "sans-serif";
-  color: gold;
-}
-.navbar .links {
-  flex: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.navbar .loggedInContainer {
-  flex: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-.navbar a {
-  margin-left: 20px;
-  text-decoration: none;
-  color: gold;
-}
-
-.navbar button {
-  width: 100px;
-  height: 40px;
-  cursor: pointer;
-  margin-right: 10px;
-  background-color: white;
-  color: black;
-}
-
-.navbar h1 {
-  text-align: right;
-  margin-right: 10px;
-  color: gold;
-  font-weight: lighter;
-}
-
-/* INDIVIDUAL POST */
 .postPage {
   display: flex;
   flex-direction: row;
@@ -258,7 +305,7 @@ span {
 }
 
 .rightSide {
-  flex: 1; /* Utilisez flex-grow pour que la partie droite prenne l'espace restant */
+  flex: 1;
   display: grid;
   place-items: center;
   display: flex;
@@ -281,20 +328,29 @@ span {
   font-family: "Montserrat", sans-serif;
 }
 
-.addCommentContainer input,
 button {
   width: 200px;
   height: 40px;
   border-radius: 8px;
   border: none;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: black;
   color: white;
+  margin-top: 20px;
 }
 
-/* 
+#buttonDeleteComment {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .addCommentContainer input {
-  border: 2px solid white;
-} */
+  margin-top: 50px;
+  width: 200px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+}
 
 .rightSide .listOfComments {
   flex: 80%;
@@ -331,10 +387,8 @@ button {
   font-size: 25px;
 }
 
-/* LOGIN */
-
 .formContainer label {
-  color: white; /* Couleur du texte blanc pour les labels */
+  color: white;
 }
 
 .loginContainer {
@@ -353,17 +407,17 @@ button {
   border-radius: 8px;
   border: none;
   margin: 10px;
-  background-color: rgba(0, 0, 0, 0.5); /* Fond noir transparent */
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
 }
 
 .loginContainer button {
-  color: gold; /* Couleur du texte pour le bouton */
+  color: gold;
   background-color: black;
 }
 
 .loginContainer input {
-  color: white; /* Couleur du texte pour les champs de saisie */
+  color: white;
 }
 
 .password-input-container {
@@ -376,7 +430,7 @@ button {
   right: 20px;
   transform: translateY(-50%);
   cursor: pointer;
-  color: white; /* Couleur du texte pour l'icône du mot de passe */
+  color: white;
 }
 
 #inputCreatePost {
@@ -405,9 +459,6 @@ button {
   margin-top: 20px;
 }
 
-/* ... (votre CSS existant) ... */
-
-/* NAVBAR */
 .navbar {
   width: 100%;
   height: 70px;
@@ -423,7 +474,7 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* Permettre aux éléments de se replier sur une nouvelle ligne si l'espace est insuffisant */
+  flex-wrap: wrap;
 }
 
 .navbar .loggedInContainer {
@@ -441,12 +492,15 @@ button {
 }
 
 .navbar button {
+  font-family: "Montserrat", "sans-serif";
+  margin-bottom: auto;
   width: 100px;
   height: 40px;
   cursor: pointer;
   margin-right: 10px;
-  background-color: white;
+  background-color: gold;
   color: black;
+  font-weight: bolder;
 }
 
 .navbar h1 {
@@ -454,6 +508,14 @@ button {
   margin-right: 10px;
   color: gold;
   font-weight: lighter;
+}
+
+.navbar .logo {
+  padding: 0 60px;
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
 }
 
 /* FOOTER */
@@ -464,7 +526,7 @@ button {
   align-items: center;
   font-family: "Cinzel", serif;
   position: relative;
-  /* bottom: 0; */
+
   background-color: black;
 }
 
@@ -473,7 +535,7 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* Permettre aux éléments de se replier sur une nouvelle ligne si l'espace est insuffisant */
+  flex-wrap: wrap;
 }
 
 .footer .loggedInContainer {

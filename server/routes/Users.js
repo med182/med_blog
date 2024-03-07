@@ -22,10 +22,6 @@ router.get("/confirm/:token", async (req, res) => {
   console.log("Token:", token);
 
   try {
-    const redirectUrl = req.user
-      ? "http://localhost:3000/home"
-      : "http://localhost:3000/login";
-
     const decoded = verify(token, "votre-secret-de-confirmation");
 
     const user = await Users.findOne({ where: { email: decoded.email } });
@@ -36,6 +32,9 @@ router.get("/confirm/:token", async (req, res) => {
         { where: { email: decoded.email } }
       );
 
+      const redirectUrl = user
+        ? "http://localhost:3000/home"
+        : "http://localhost:3000/login";
       return res.redirect(redirectUrl);
     } else {
       res.status(400).json({ error: "Utilisateur non trouvé" });
