@@ -29,9 +29,10 @@ function ChangePassword() {
   };
 
   return (
-    <div>
-      <h1>Changer votre mot de passe</h1>
+    <div className="infos">
+      <h1 className="changerMotDePasse">Changer votre mot de passe</h1>
       <input
+        id="input"
         type="text"
         placeholder="Ancien Mot De Passe..."
         onChange={(e) => {
@@ -39,6 +40,7 @@ function ChangePassword() {
         }}
       />
       <input
+        id="input"
         type="text"
         placeholder="Nouveau Mot De Passe..."
         onChange={(e) => {

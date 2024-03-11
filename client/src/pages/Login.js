@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -10,10 +10,16 @@ function Login() {
   const [password, setPassword] = useState("");
   const { setAuthState } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  // const [showPopup, setShowPopup] = useState(false);
+  const [acceptedCGU, setAcceptedCGU] = useState(false);
 
   let navigate = useNavigate();
 
   const login = () => {
+    if (!acceptedCGU) {
+      alert("Veuillez accepter les conditions générales d'utilisation.");
+      return;
+    }
     const data = { username: username, password: password };
     axios.post("http://localhost:8000/auth/login", data).then((response) => {
       if (response.data.error) {
@@ -32,6 +38,10 @@ function Login() {
       }
     });
   };
+
+  // const togglePopup = () => {
+  //   setShowPopup(!showPopup);
+  // };
 
   return (
     <div className="loginContainer">
@@ -55,7 +65,26 @@ function Login() {
           className="password-icon"
         />
       </div>
-      <button onClick={login}>Se connecter</button>
+      <div className="checkbox-container">
+        <label className="cgu-label">
+          <input
+            type="checkbox"
+            checked={acceptedCGU}
+            onChange={() => setAcceptedCGU(!acceptedCGU)}
+          />
+
+          <span className="cgu-text">
+            {" "}
+            J'accepte les{" "}
+            <Link to="/cgu" className="cgu-link">
+              conditions générales d'utilisation
+            </Link>
+          </span>
+        </label>
+      </div>
+      <button onClick={login} disabled={!acceptedCGU}>
+        Se connecter
+      </button>
     </div>
   );
 }

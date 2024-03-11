@@ -389,6 +389,7 @@ button {
 
 .formContainer label {
   color: white;
+  flex-direction: row;
 }
 
 .loginContainer {
@@ -430,7 +431,7 @@ button {
   right: 20px;
   transform: translateY(-50%);
   cursor: pointer;
-  color: white;
+  color: black;
 }
 
 #inputCreatePost {
@@ -510,6 +511,36 @@ button {
   font-weight: lighter;
 }
 
+.changerMotDePasse {
+  color: gold;
+}
+.infos {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-width: 500px;
+  height: auto;
+  padding: 20px;
+  border: 5px solid black;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+
+  height: 100%;
+}
+#input {
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 20px;
+  padding-right: 40px;
+}
+
 .navbar .logo {
   padding: 0 60px;
   font-family: "Pacifico", cursive;
@@ -580,3 +611,168 @@ button {
 .api-page li {
   margin-bottom: 10px;
 }
+.profilePageContainer {
+  font-family: "Cinzel", serif;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profilePageContainer .basicInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profilePageContainer .basicInfo h1 {
+  font-size: 32px;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.profilePageContainer .basicInfo button {
+  width: 200px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background-color: black;
+  color: gold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.profilePageContainer .basicInfo button:hover {
+  background-color: gold;
+  color: black;
+}
+
+.profilePageContainer .listOfPosts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.profilePageContainer .post {
+  width: 90%;
+  max-width: 300px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profilePageContainer .post:hover {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.profilePageContainer .post .title {
+  padding: 10px;
+  background-color: black;
+  color: gold;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid lightgray;
+}
+
+.profilePageContainer .post .body {
+  padding: 10px;
+  color: white;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+}
+
+.profilePageContainer .post .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: black;
+  color: gold;
+}
+
+.profilePageContainer .post .footer .username {
+  font-size: 16px;
+}
+
+.profilePageContainer .post .footer .buttons {
+  display: flex;
+  align-items: center;
+}
+
+.profilePageContainer .post .footer .buttons label {
+  margin-right: 10px;
+}
+
+.profilePageContainer .post .likeBttn,
+.profilePageContainer .post .unlikeBttn {
+  font-size: 24px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.profilePageContainer .post .likeBttn:hover,
+.profilePageContainer .post .unlikeBttn:hover {
+  color: gold;
+}
+
+.profilePageContainer .pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.cgu-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cgu-label span {
+  font-size: 14px;
+  font-weight: bold; /* Ajuster la taille du texte */
+}
+.cgu-text {
+  display: inline-block;
+  background-color: white;
+  padding: 8px 12px;
+
+  border-radius: 5px;
+  margin-left: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cgu-link {
+  color: blue; /* Couleur du lien */
+
+  font-weight: bold; /* Pas de soulignement */
+}
+
+.cgu-label input[type="checkbox"] {
+  margin-right: -90px; /* Ajuster la marge entre la checkbox et le texte */
+  transform: scale(0.4);
+  background-color: black; /* Réduire la taille de la case à cocher */
+}
+
+.cgu-text {
+  font-size: 14px; /* Ajuster la taille du texte */
+  margin-left: 5px; /* Ajuster la marge entre la checkbox et le texte */
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Ajoutez d'autres styles personnalisés selon vos besoins */
