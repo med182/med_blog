@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { AuthContext } from "../helpers/AuthContext";
 import { Pagination } from "@mui/material";
+import CookieBanner from "./CookieBanner";
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
@@ -16,7 +17,7 @@ function Home() {
 
   useEffect(() => {
     if (!localStorage.getItem("accessToken")) {
-      // navigate("/login");
+      navigate("/login");
     } else {
       axios
         .get("http://localhost:8000/posts", {
@@ -113,6 +114,8 @@ function Home() {
           </div>
         );
       })}
+      <CookieBanner />
+
       <div className="pagination-container">
         <Pagination
           count={Math.ceil(listOfPosts.length / postsPerPage)}

@@ -32,10 +32,10 @@ router.get("/confirm/:token", async (req, res) => {
         { where: { email: decoded.email } }
       );
 
-      const redirectUrl = user
-        ? "http://localhost:3000/home"
-        : "http://localhost:3000/login";
-      return res.redirect(redirectUrl);
+      // const redirectUrl = user
+      //   ? "http://localhost:3000/home"
+      //   : "http://localhost:3000/login";
+      return res.redirect("http://localhost:3000/login");
     } else {
       res.status(400).json({ error: "Utilisateur non trouvé" });
     }

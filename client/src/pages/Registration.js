@@ -7,6 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../helpers/AuthContext";
 // import {useNavigate} from 'react-router-dom';
 import axios from "axios";
+import { message } from "antd";
 
 function Registration() {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +49,7 @@ function Registration() {
     axios
       .post("http://localhost:8000/auth", data)
       .then(() => {
-        setFlashMessage(
+        message.success(
           "Inscription réussie, un mail de confirmation vous a été envoyé !"
         );
         console.log(data);
@@ -66,7 +67,7 @@ function Registration() {
           // Affiche le message d'erreur renvoyé par le serveur
           alert(error.response.data.error);
         } else {
-          setFlashMessage("Une erreur s'est produite lors de l'inscription.");
+          message.error("Une erreur s'est produite lors de l'inscription.");
           console.error(
             "Une erreur s'est produite lors de l'inscription :",
             error

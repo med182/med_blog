@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const validateToken = require("./middlewares/AuthMiddlwares");
+
 // const path = require("path");
 
 app.use(express.json());
